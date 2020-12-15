@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action=""
+	<ul>
+		<li> 아이디 :	</li>
+		<li> 패스워드 :	</li>
+		<li> 이름 :	</li>
+		<li> 나이 :	</li>
+		<li> 성별 : 
+		<input type="radio" name="gender" value="여성" />여성&nbsp;&nbsp;
+		<input type="radio" name="gender" value="남성" />남성&nbsp;&nbsp;
+		</li>
+		<li><input type="submit" value="가입하기"/></li>
+	</ul>
+></form>
+</body>
+</html>

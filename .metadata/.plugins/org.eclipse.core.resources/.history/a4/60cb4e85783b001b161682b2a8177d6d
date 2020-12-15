@@ -1,0 +1,47 @@
+package com.example.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.example.vo.UserVO;
+
+@Repository("userDao")
+public class UserDaoImpl implements UserDao {
+	@Autowired
+	private SqlSession sqlSession;
+	
+	
+	@Override
+	public void insertUser(UserVO userVO) {
+		// this.sqlSession.insert("insert", userVO);
+	}
+
+	@Override
+	public UserVO selectUser(String userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserVO> selectAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateUser(UserVO userVO) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteUser(String userid) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+}

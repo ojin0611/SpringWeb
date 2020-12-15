@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+ul {
+	list-style-type: none;
+}
+
+body {
+	background-color: cyan;
+}
+
+h1, form {
+	text-align: center;
+}

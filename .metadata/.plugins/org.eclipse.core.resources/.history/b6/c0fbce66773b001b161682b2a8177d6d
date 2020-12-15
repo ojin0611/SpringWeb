@@ -1,0 +1,37 @@
+package com.example.dao;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.sql.Connection;
+
+import javax.sql.DataSource;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.example.config.RootConfig;
+
+import lombok.extern.java.Log;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {RootConfig.class})
+@Log
+class DaoTest {
+   @Autowired
+   private DataSource dataSource;
+   
+   @Test
+   void test() {
+      assertNotNull(this.dataSource);
+      try(Connection conn = this.dataSource.getConnection()){
+         log.info(conn.toString());
+      }catch(Exception ex) {
+         fail(ex.toString());
+      }
+   }
+
+}

@@ -1,0 +1,49 @@
+package com.example.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.example.vo.UserVO;
+
+import lombok.extern.java.Log;
+
+@Repository("userDao") // UserDao의 데이터 처리
+@Log
+public class UserDaoImpl implements UserDao {
+	@Autowired
+	private SqlSession sqlSession;	// Dao는 sqlSession과 바인딩 한다
+	
+	@Override
+	public void insertUser(UserVO userVO) {
+		log.info("추가되는 유저 정보 = " + userVO.toString());
+		this.sqlSession.insert("insert", userVO);
+	}
+
+	@Override
+	public UserVO selectUser(String userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserVO> selectAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateUser(UserVO userVO) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteUser(String userid) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
