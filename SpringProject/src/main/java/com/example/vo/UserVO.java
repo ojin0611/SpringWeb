@@ -18,4 +18,5 @@ public class UserVO {
 	private int age;
 	private String gender;
 	private int flag;
+	private BbsVO bbsVO;
 }

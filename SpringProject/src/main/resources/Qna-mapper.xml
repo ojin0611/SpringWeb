@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Qna">
+
+	<parameterMap type="qnaVO" id="insertParameterMap">
+		<parameter property="writer" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="content" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+	<insert id="insertSP" parameterMap="insertParameterMap" statementType="CALLABLE">
+		{ call sp_qna_insert(?, ?, ?, ?)
+	</insert>
+	
+	<insert id="insertReply" parameterType="qnaVO">
+		INSERT INTO Qna(bno, writer, email, title, content, grp, lvl, step)
+		VALUES(seq_qna_bno.NEXTVAL, #{writer}, #{email}, #{title}, #{content},
+		              #{grp}, #{lvl}, #{step})
+	</insert>
+
+	<resultMap type="qnaVO" id="selectMap">
+		<id column="bno" jdbcType="INTEGER" 
+			property="bno" javaType="Integer"/>
+		<result column="writer" jdbcType="VARCHAR" 
+			property="writer" javaType="String" />
+		<result column="title" jdbcType="VARCHAR" 
+			property="title" javaType="String"/>
+		<result column="content" jdbcType="VARCHAR" 
+			property="content" javaType="String"/>
+		<result column="email" jdbcType="VARCHAR" 
+			property="email" javaType="String"/>
+		<result column="writeday" jdbcType="VARCHAR" 
+			property="writeday" javaType="String"/>
+		<result column="readnum" jdbcType="INTEGER" 
+			property="readnum" javaType="Integer" />
+		<result column="grp" jdbcType="INTEGER" 
+			property="grp" javaType="Integer" />
+		<result column="lvl" jdbcType="INTEGER" 
+			property="lvl" javaType="Integer" />
+		<result column="step" jdbcType="INTEGER" 
+			property="step" javaType="Integer" />
+	</resultMap>
+	
+	
+	<select id="selectAll" resultMap="selectMap" resultType="qnaVO">
+		SELECT grp, bno, writer, title, TO_CHAR(regdate, 'YYYY-MM-DD' ) AS writeday, 
+		              readnum, lvl, step 
+		FROM Qna
+		ORDER BY grp DESC, step ASC
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultMap="selectMap">
+		SELECT bno, writer, title, content, email, readnum, 
+		              TO_CHAR(regdate, 'YYYY-MM-DD' ) AS writeday, grp, lvl, step
+		FROM Qna
+		WHERE bno = #{bno}
+	</select>
+	
+	<!-- 전체 레코드 수 조회 -->
+	<select id="selectCount" resultType="Integer">
+		SELECT COUNT(bno) FROM Qna
+	</select>
+	
+	<!--  조회수 증가 -->
+	<update id="readnumUpdate" parameterType="int">
+		UPDATE Qna SET readnum = readnum + 1
+		WHERE bno = #{bno}
+	</update>
+	
+	<update id="update" parameterType="qnaVO">
+		UPDATE Qna
+		SET title = #{title}, content = #{content}, email = #{email}
+		WHERE bno = #{bno}
+	</update>
+	
+	<parameterMap type="qnaVO" id="updateStepMap">
+		<parameter property="grp" javaType="Integer" jdbcType="INTEGER" />
+		<parameter property="step" javaType="Integer" jdbcType="INTEGER"/>
+	</parameterMap>
+	<update id="updateStepSP" parameterMap="updateStepMap">
+		{ call sp_qna_update_step(?, ?) }
+	</update>
+	
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM Qna
+		WHERE bno = #{bno}
+	</delete>
+	
+
+</mapper>

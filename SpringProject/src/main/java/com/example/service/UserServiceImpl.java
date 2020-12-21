@@ -25,13 +25,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserVO> readAll() {
-		return this.userDao.selectAllUsers() ;
+		return this.userDao.selectAllUsers();
 	}
 
 	@Override
 	public void update(UserVO userVO) {
-		// TODO Auto-generated method stub
-
+		this.userDao.updateUser(userVO);
 	}
 
 	@Override

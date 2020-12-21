@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ class UserServiceTest {
 	@Test
 	void test() {
 		assertNotNull(this.userDao);
-		this.userDao.deleteUser("userid5");
+		this.userDao.deleteUser("jimin");
 	}
 
 }

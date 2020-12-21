@@ -2,6 +2,9 @@
 <section name="Workbench">
 	<list key="installedFeatures">
 		<item value="com.ianbrandt.tools.m2e.mdp.feature:0.0.4.201409291703"/>
+		<item value="com.objectaid.uml.addon:1.2.4"/>
+		<item value="com.objectaid.uml.cls:1.2.4"/>
+		<item value="com.objectaid.uml.seq:1.2.4"/>
 		<item value="com.tomato.exerd.feature:3.3.7.20200914-1426"/>
 		<item value="oracle.eclipse.tools.adf.v11114.doc:11.1.14.201409161518"/>
 		<item value="oracle.eclipse.tools.adf.v11115.doc:11.1.15.201409161515"/>
@@ -44,7 +47,7 @@
 		<item value="org.eclipse.buildship:3.1.4.v20200326-1743"/>
 		<item value="org.eclipse.egit.gitflow.feature:5.9.0.202009080501-r"/>
 		<item value="org.eclipse.egit:5.9.0.202009080501-r"/>
-		<item value="org.eclipse.emf.common:2.20.0.v20200822-0801"/>
+		<item value="org.eclipse.emf.common:2.21.0.v20200917-1439"/>
 		<item value="org.eclipse.emf.ecore:2.23.0.v20200630-0516"/>
 		<item value="org.eclipse.epp.mpc:1.8.4.v20200709-0857"/>
 		<item value="org.eclipse.help:2.3.300.v20200902-1800"/>
@@ -116,7 +119,15 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\Yang\git\SIST_SpringProject\SpringProject2"/>
 			<item value="C:\SpringHome\SpringJavaWebDemo"/>
 		</list>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="225"/>
+		<item key="DIALOG_Y_ORIGIN" value="137"/>
+		<item key="DIALOG_WIDTH" value="525"/>
+		<item key="DIALOG_HEIGHT" value="580"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 </section>

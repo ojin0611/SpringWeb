@@ -26,26 +26,27 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public UserVO selectUser(String userid) {
-		// return (UserVO)this.sqlSession.selectOne("Users.selectOne", userid);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userid", userid);
 		this.sqlSession.selectOne("Users.selectOneSP", map);
-		List<UserVO> list = (List<UserVO>) map.get("result");
-		if (list.size() > 0) return list.get(0);
-		else return null;
+		List<UserVO> list = (List<UserVO>)map.get("result");
+		if(list.size() == 1) 	return list.get(0);  //유저를 찾았다면
+		else return null;                          //유저를 못찾았다면
 	}
 
 	@Override
 	public List<UserVO> selectAllUsers() {
-		// return this.sqlSession.selectList("Users.selectAll");
 		Map<String, Object> map = new HashMap<String, Object>();
 		this.sqlSession.selectList("Users.selectAllSP", map);
-		return (List<UserVO>) map.get("result");
+		List<UserVO> list = (List<UserVO>)map.get("result");
+		log.info(String.valueOf(list.size()));
+		
+		return (List<UserVO>)map.get("result");
 	}
 
 	@Override
 	public void updateUser(UserVO userVO) {
-		this.sqlSession.update("Users.update", userVO);
+		this.sqlSession.update("Users.updateSP", userVO);
 	}
 
 	@Override

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
 <aop-project name="SpringProject"/>
+<aop-project name="RestfulDemo"/>
 <aop-project name="MvcDemo"/>
 <aop-project name="SpringJavaWebDemo"/>
 <aop-project name="SpringWebDemo"/>
 <aop-project name="HelloWorldWeb"/>
-<aop-project name="Test"/>
+<aop-project name="sup"/>
 </aop-reference-model>

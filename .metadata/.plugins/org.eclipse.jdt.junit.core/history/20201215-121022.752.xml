@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="UserServiceTest" project="SpringProject" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="com.example.controller.UserServiceTest" time="0.325" displayname="UserServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.example.controller.UserServiceTest]">
-    <testcase name="test" classname="com.example.controller.UserServiceTest" time="0.325" displayname="test()" uniqueid="[engine:junit-jupiter]/[class:com.example.controller.UserServiceTest]/[method:test()]"/>
-  </testsuite>
-</testrun>
