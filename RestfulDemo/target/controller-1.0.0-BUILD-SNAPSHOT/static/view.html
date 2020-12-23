@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 페이지</title>
+<script src="js/jquery-3.5.1.js"></script>
+<script>
+	var userid = null;
+	$(function() {
+		userid = location.search.substring(1).split("=")[1];
+		$.ajax({
+			url : "/members/" + userid,
+			type : "GET",
+			dataType : "json",
+			success : function(data) {
+				var member = data.data;
+				$("#userid").text(member.userid);
+				$("#name").text(member.name);
+				$("#gender").text(member.gender);
+				$("#city").text(member.city);
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>Member Information</h1>
+	<ul>
+		<li>아이디 : <span id="userid"></span></li>
+		<li>이름 : <span id="name"></span></li>
+		<li>성별 : <span id="gender"></span></li>
+		<li>거주지 : <span id="city"></span></li>
+	</ul>
+	<a href="javascript:void(0)" onclick="javascript:history.back();">목록으로</a>
+</body>
+</html>

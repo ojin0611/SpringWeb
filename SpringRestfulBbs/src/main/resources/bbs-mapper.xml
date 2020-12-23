@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Bbs">
+
+	<select id="today" resultType="java.util.Date">
+		SELECT SYSDATE FROM dual
+	</select>
+	
+	<resultMap type="bbsVO" id="BbsResultMap">
+		<id property="idx" javaType="java.lang.Integer" column="idx" jdbcType="INTEGER"/>
+		<result property="writer" javaType="java.lang.String" column="writer" jdbcType="VARCHAR"/>
+		<result property="title" javaType="java.lang.String" column="title" jdbcType="VARCHAR"/>
+		<result property="contents" javaType="java.lang.String" column="contents" jdbcType="VARCHAR"/>
+		<result property="email" javaType="java.lang.String" column="email" jdbcType="VARCHAR"/>
+		<result property="readnum" javaType="java.lang.Integer" column="readnum" jdbcType="INTEGER"/>
+		<result property="writeday" javaType="java.util.Date" column="writeday" jdbcType="DATE"/>
+	</resultMap>
+	
+	<parameterMap type="bbsVO" id="selectAllParameterMap">
+		<parameter property="results" javaType="ResultSet" 
+			jdbcType="CURSOR" mode="OUT" resultMap="BbsResultMap"/>
+	</parameterMap>
+	
+	<select id="selectAll" parameterMap="selectAllParameterMap" 
+			statementType="CALLABLE">
+		{ call sp_bbs_select_all(?) }
+	</select>
+	
+	<parameterMap type="bbsVO" id="insertParameterMap">
+		<parameter property="writer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="contents" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<insert id="insert" parameterMap="insertParameterMap" statementType="CALLABLE">
+		{ call sp_bbs_insert(?, ?, ?, ?) }
+	</insert>
+</mapper>

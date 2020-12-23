@@ -10,7 +10,7 @@
     <fullyQualifiedTypeName name="com.example.service.BbsService"/>
     <fullyQualifiedTypeName name="org.springframework.test.context.junit.jupiter.SpringExtension"/>
     <fullyQualifiedTypeName name="com.example.vo.UserVO"/>
-    <fullyQualifiedTypeName name="lombok.extern.java.Log"/>
-    <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="lombok.extern.java.Log"/>
 </qualifiedTypeNameHistroy>

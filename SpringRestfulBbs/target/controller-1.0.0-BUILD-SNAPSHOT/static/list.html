@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 보기</title>
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-theme.css" />
+<script src="/static/js/jquery-3.5.1.js"></script>
+<script>
+	$(function(){
+		$.ajax({
+			url : '/bbs',
+			type : 'GET',
+			dataType : 'json',   //서버로부터 받아오는 데이터의 데이터 타입
+			success : function(data){
+				let array = data.data;
+				$('#count').html("<span style='color:red;'>" + array.length + "</span>개");
+				let str = "";
+				if(array.length == 0){
+					str = "<tr class='bg-danger'><td colspan='5' class='text-center'>No Data</td></tr>";
+				}else{
+					for(let i = 0 ; i < array.length ; i++){
+						let bbs = array[i];
+						let writeday = new Date(bbs.writeday);
+						str += "<tr>";
+						str += "<td class='text-center'>" + bbs.idx + "</td>";
+						str += "<td class='text-center'>" + bbs.writer + "</td>";
+						str += "<td class='text-center'>" + bbs.title + "</td>";
+						str += "<td class='text-center'>" + writeday.toLocaleDateString() + "</td>";
+						str += "<td class='text-center'>" + bbs.readnum + "</td>";
+						str += "</tr>";
+					}
+				}
+				$('#results').html(str);
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h1 class="text-center">자유 게시판</h1>
+			<table class="table" style="border:0px solid white">
+				<tr>
+					<td class="text-left">
+						<a href="/write"><img src="/images/write.gif" /></a>
+					</td>
+					<td class="text-right">(<span id="count"></span>)</td>
+				</tr>
+			</table>
+			<table class="table table-bordered">
+				<thead>
+					<tr class="bg-primary">
+						<th style="width:10%" class='text-center'>글번호</th>
+						<th style="width:15%" class='text-center'>작성자</th>
+						<th style="width:50%" class='text-center'>제목</th>
+						<th style="width:15%" class='text-center'>작성날짜</th>
+						<th style="width:10%" class='text-center'>조회수</th>
+					</tr>
+				</thead>
+				<tbody id="results"></tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

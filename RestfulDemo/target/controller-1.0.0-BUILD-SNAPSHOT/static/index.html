@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Welcome</title>
+<script src="js/jquery-3.5.1.js"></script>
+<script>
+	$(function(){
+		$.ajax({
+			url : "/members",
+			type : "GET",
+			dataType : "json",  //서버로부터 받아오는 데이터타입
+			success : function(data) {
+				var str = "";
+				var members = data.data;  //배열
+				for (var i = 0; i < members.length; i++) {
+					str += "<tr>";
+					var userid = members[i].userid;
+					str += "<td><a href='view.html?userid=" + userid + "'>" + userid + "</a></td>" + "<td>"
+									+ members[i].name + "</td>" + "<td>"
+									+ members[i].gender + "</td>" + "<td>"
+									+ members[i].city + "</td>";
+					str += "</tr>";
+				}
+				$("#result").html(str);
+			}
+		})
+	});
+</script>
+</head>
+<body>
+	<h1>Member List</h1>
+	<div>
+		<a href="register.html">Member Add</a>
+	</div>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>성별</th>
+				<th>거주지</th>
+			</tr>
+		</thead>
+		<tbody id="result">
+		</tbody>
+	</table>
+</body>
+</html>

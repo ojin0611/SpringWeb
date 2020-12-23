@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 페이지</title>
+<script src="js/jquery-3.5.1.js"></script>
+<script>
+	var userid = null;
+	$(function() {
+		userid = location.search.substring(1).split("=")[1];
+		$.ajax({
+			url : "/members/" + userid,
+			type : "GET",
+			dataType : "json",
+			success : function(data) {
+				var member = data.data;
+				$("#userid").text(member.userid);
+				$("#name").text(member.name);
+				$("#gender").text(member.gender);
+				$("#city").text(member.city);
+			}
+		});
+	});
+
+	var flag = false;
+	function member_update() {
+		if (!flag) { //수정하기를 click하면
+			var name = $("#name").text();
+			$("span#name").replaceWith(
+					"<input type='text' id='name' value='" + name + "'/>");
+			var gender = $("#gender").text();
+			var str = null;
+			if (gender == "남성") {
+				str = "<input type='radio' name='gender' class='gender' value='남성' checked/>남성&nbsp;&nbsp;"
+						+ "<input type='radio' name='gender' class='gender' value='여성' />여성";
+			} else {
+				str = "<input type='radio' class='gender' name='gender' value='남성'/>남성&nbsp;&nbsp;"
+						+ "<input type='radio' class='gender' name='gender' value='여성' checked />여성";
+			}
+			$("span#gender").replaceWith(str);
+			var city = $("#city").text();
+			$("span#city").replaceWith(
+					"<input type='text' id='city' value='" + city + "'/>");
+			flag = true;
+		} else {
+			$.ajax({
+				url : "/members",
+				type : "PUT",
+				data : JSON.stringify({
+					"userid" : userid,
+					"name" : $("#name").val(),
+					"gender" : $(".gender:checked").val(),
+					"city" : $("#city").val()
+				}),
+				dataType : "json", //서버로부터 받아온 데이터의 데이터타입
+				contentType : "application/json;charset=utf-8", //서버로 보내는 데이터의 데이터타입
+				success : function(data) {
+					alert(data.code);
+					location.reload();
+				}
+			});
+			flag = false;
+		}
+	}
+	function member_delete() {
+		$.ajax({
+			url : "/members/" + userid,
+			type : "DELETE",
+			success : function(data) {
+				alert(data.code);
+				location.href = "/static/index.html";
+			}
+		});
+	}
+</script>
+</head>
+<body>
+	<h1>Member Information</h1>
+	<ul>
+		<li>아이디 : <span id="userid"></span></li>
+		<li>이름 : <span id="name"></span></li>
+		<li>성별 : <span id="gender"></span></li>
+		<li>거주지 : <span id="city"></span></li>
+	</ul>
+	<div>
+		<a href="javascript:void(0)" onclick="javascript:history.back();">목록으로</a>
+		<a href="javascript:void(0)" onclick="javascript:member_update()">수정하기</a>
+		<a href="javascript:void(0)" onclick="javascript:member_delete()">삭제하기</a>
+	</div>
+</body>
+</html>
