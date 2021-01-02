@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>게시판 글 수정하기</title>
+	<link rel="stylesheet" href="/static/css/bootstrap.css" />
+	<link rel="stylesheet" href="/static/css/bootstrap-theme.css" />
+	<script src="/static/js/jquery-3.5.1.js"></script>
+	<script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
+	<script>
+		$(function(){
+			let idx = location.search.substring(1).split("=")[1];
+			$.ajax({
+				url : '/bbs/' + idx,
+				type : 'GET',
+				dataType : 'json',
+				success : function(data){
+					let bbs = data.data;
+					let title = bbs['title'];
+					title = title.replace(/''/g, "'");   //홑홑따옴표를 홑따옴표로
+					title = title.replace(/&lt;/g, '<');
+					title = title.replace(/&gt;/g, '>');
+					let contents = bbs['contents'];
+					contents = contents.replace(/''/g, "'");
+					contents = contents.replace(/&lt;/g, '<');
+					contents = contents.replace(/&gt;/g, '>');
+					
+					$('#txtTitle').val(title);
+					$('#txtWriter').val(bbs.writer);
+					CKEDITOR.instances.contents.setData(contents);
+					
+					let email = bbs.email;
+					let company = null;
+					if(email != null) {
+						let array = email.split('@');
+						email = array[0];
+						$('#txtEmail').val(email);
+						company = array[1];
+						array = ["naver.com", "hanmail.net", "google.com", "nate.com"];
+						let searchIdx = array.indexOf(company);
+						if(searchIdx != -1) document.getElementById('company').selectedIndex = searchIdx;
+						else if(searchIdx == -1){ //못 찾았다면
+							$('#company')
+							.replaceWith("<input type='text' class='form-control' id='company' value='" + company +"'>");
+						}
+					}
+					
+				}
+			});  //ajax end
+			
+			$('#btnList').on('click', function(){
+				location.href = "/list";
+			});
+			
+			$('#btnCancel').on('click', function(){
+				history.back();
+			});
+			
+			$('#company').on('change', function() {
+				let company = document.getElementById("company")
+				if (company.selectedIndex == 4) { //직접입력을 선택했다면
+					$(this).replaceWith("<input type='text' name='company' class='form-control'>");
+				}
+			});
+			
+			$('#btnUpdate').on('click', function(){
+				if(!$('#txtTitle').val()){
+					alert("글 제목이 빠졌습니다.");
+					$('#txtTitle').focus();
+					return false;
+				}
+				if(!CKEDITOR.instances.contents.getData()){
+					alert("글 내용이 빠졌습니다.");
+					CKEDITOR.instances.contents.focus();
+					return false;
+				}
+				
+				let email = $('#txtEmail').val();
+				if(email != "") email += '@' + $('#company').val();
+				
+				$.ajax({
+					url : '/bbs',
+					type : 'PUT',
+					contentType : 'application/json;charset=utf-8',   //서버로 보내는 데이터의 데이터타입
+					dataType : 'json',     //서버에서 보내오는 데이터의 데이터타입
+					data : JSON.stringify({
+						'email' : email,
+						'title' : $('#txtTitle').val(),
+						'contents' : CKEDITOR.instances.contents.getData(),
+						'idx' : idx
+					}),                    //서버로 보내는 데이터
+					success : function(data){    //서버에서 받아온 데이터
+						alert(data.code);   //success
+						location.href = '/view?idx=' + idx;
+					}
+				});
+			});
+		});  //jquery end
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h1 class="text-center">게시판 글 수정하기</h1>
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label for="txtTitle" class="col-sm-2 control-label">글 제목</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="title" id="txtTitle"
+							placeholder="글 제목을 입력합니다.">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="txtWriter" class="col-sm-2 control-label">작성자</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="writer" id="txtWriter"
+							placeholder="작성자의 이름을 입력합니다." readonly>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="txtEmail" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-3">
+						<input type="text" name="email" class="form-control" id="txtEmail"
+							placeholder="글쓴이의 Email을 입력합니다.">
+					</div>
+					<div class="input-group  col-sm-3">
+						<span class="input-group-addon">@</span> 
+						<select class="form-control" name="company" id="company">
+							<option value="naver.com">네이버</option>
+							<option value="hanmail.net">한메일</option>
+							<option value="google.com">구글</option>
+							<option value="nate.com">네이트</option>
+							<option>직접입력</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="txtContent" class="col-sm-2 control-label">글 내용</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" rows="10" name="contents"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="button" id='btnUpdate' class="btn btn-success">수정하기</button>
+						<button type="button" id="btnCancel" class="btn btn-warning">취소하기</button>
+						<button type="button" id="btnList" class="btn btn-danger">목록으로</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		CKEDITOR.replace('contents');
+	</script>
+</body>
+</html>

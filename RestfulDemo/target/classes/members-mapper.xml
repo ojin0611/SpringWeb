@@ -26,7 +26,13 @@
 	</insert>
 
 	<update id="update" parameterType="memberVO">
-		UPDATE Member SET name = #{name}, gender = #{gender}, city = #{city}
+		UPDATE Member SET name =
+		#{name}, gender = #{gender}, city = #{city}
 		WHERE userid = #{userid}
 	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE FROM Member WHERE userid = #{userid}
+	</delete>
+
 </mapper>

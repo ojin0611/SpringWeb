@@ -21,11 +21,16 @@
 				}else{
 					for(let i = 0 ; i < array.length ; i++){
 						let bbs = array[i];
+						let title = bbs.title;
+						title = title.replace(/''/g, "'");  //홑홑따옴표를 홑따옴표로
 						let writeday = new Date(bbs.writeday);
 						str += "<tr>";
 						str += "<td class='text-center'>" + bbs.idx + "</td>";
-						str += "<td class='text-center'>" + bbs.writer + "</td>";
-						str += "<td class='text-center'>" + bbs.title + "</td>";
+						str += "<td class='text-center'>";
+						if(bbs.email != null) str += "<a href='mailto:" + bbs.email + "'>" + bbs.writer + "</a></td>";
+						else str += bbs.writer + "</td>";
+						str += "<td class='text-center'>";
+						str += "<a href='/view?idx=" + bbs.idx + "'>" + title + "</a></td>";
 						str += "<td class='text-center'>" + writeday.toLocaleDateString() + "</td>";
 						str += "<td class='text-center'>" + bbs.readnum + "</td>";
 						str += "</tr>";

@@ -48,7 +48,9 @@ public class RootConfig {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(this.dataSource());
 		sqlSessionFactory.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
-		sqlSessionFactory.setMapperLocations(new ClassPathResource("bbs-mapper.xml"));
+		sqlSessionFactory.setMapperLocations(
+				new ClassPathResource("bbs-mapper.xml"), 
+				new ClassPathResource("reply-mapper.xml"));
 		return (SqlSessionFactory)sqlSessionFactory.getObject();
 	}
 	

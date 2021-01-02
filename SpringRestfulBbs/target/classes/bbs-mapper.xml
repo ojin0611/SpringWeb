@@ -16,6 +16,7 @@
 		<result property="email" javaType="java.lang.String" column="email" jdbcType="VARCHAR"/>
 		<result property="readnum" javaType="java.lang.Integer" column="readnum" jdbcType="INTEGER"/>
 		<result property="writeday" javaType="java.util.Date" column="writeday" jdbcType="DATE"/>
+		<collection property="replyVO" resultMap="Reply.ReplyResultMap"/>
 	</resultMap>
 	
 	<parameterMap type="bbsVO" id="selectAllParameterMap">
@@ -28,6 +29,17 @@
 		{ call sp_bbs_select_all(?) }
 	</select>
 	
+	<parameterMap type="bbsVO" id="selectOneParameterMap">
+		<parameter property="idx" javaType="Integer" 
+			jdbcType="INTEGER" mode="IN"/>
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" 
+			mode="OUT" resultMap="BbsResultMap"/>
+	</parameterMap>
+	
+	<select id="selectOne" parameterMap="selectOneParameterMap" statementType="CALLABLE">
+		{ call sp_bbs_select(?, ?) }
+	</select>
+	
 	<parameterMap type="bbsVO" id="insertParameterMap">
 		<parameter property="writer" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="email" javaType="String" jdbcType="VARCHAR" />
@@ -38,4 +50,28 @@
 	<insert id="insert" parameterMap="insertParameterMap" statementType="CALLABLE">
 		{ call sp_bbs_insert(?, ?, ?, ?) }
 	</insert>
+	
+	<!-- <parameterMap type="Integer" id="deleteParameterMap">
+		<parameter property="idx" javaType="Integer" jdbcType="INTEGER"/>
+	</parameterMap>
+	
+	<delete id="delete" parameterMap="deleteParameterMap" statementType="CALLABLE">
+		{ call sp_bbs_delete(?) }
+	</delete> -->
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		DELETE FROM BBS WHERE idx = #{idx}
+	</delete>
+	
+	<parameterMap type="bbsVO" id="updateParameterMap">
+		<parameter property="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<parameter property="title" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="contents" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="idx" javaType="Integer" jdbcType="INTEGER"/>
+	</parameterMap>
+	
+	<update id="update" parameterMap="updateParameterMap" 
+		statementType="CALLABLE">
+		{ call sp_bbs_update(?, ?, ?, ?) }
+	</update>
 </mapper>

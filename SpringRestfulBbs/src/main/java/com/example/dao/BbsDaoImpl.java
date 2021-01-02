@@ -20,8 +20,7 @@ public class BbsDaoImpl implements BbsDao {
 
 	@Override
 	public void select(Map map) {
-		// TODO Auto-generated method stub
-
+		this.sqlSession.selectOne("Bbs.selectOne", map);
 	}
 
 	@Override
@@ -31,14 +30,12 @@ public class BbsDaoImpl implements BbsDao {
 
 	@Override
 	public void update(BbsVO bbsVo) {
-		// TODO Auto-generated method stub
-
+		this.sqlSession.update("Bbs.update", bbsVo);
 	}
 
 	@Override
 	public void delete(int idx) {
-		// TODO Auto-generated method stub
-
+		this.sqlSession.delete("Bbs.delete", idx);
 	}
 
 }

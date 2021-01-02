@@ -14,4 +14,5 @@ public class BbsVO {
 	private String writer, title, contents, email;
 	private int readnum;
 	private Date writeday;
+	private ReplyVO replyVO;
 }

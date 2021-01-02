@@ -59,3 +59,20 @@ BEGIN
     INSERT INTO BBS(idx, writer, title, contents, email, readnum, writeday)
     VALUES(bbs_seq.NEXTVAL, v_writer, v_title, v_contents, v_email, 0, SYSDATE);
 END;
+
+--글 번호로 한 개의 bbs 가져오기, 조회수 증가하기
+CREATE OR REPLACE PROCEDURE sp_bbs_select
+(
+    v_idx     IN      bbs.idx%TYPE,
+    bbs_record      OUT      SYS_REFCURSOR
+)
+AS
+BEGIN
+    OPEN bbs_record FOR
+    SELECT idx, writer, email, title, writeday, readnum, contents
+    FROM BBS
+    WHERE idx = v_idx;
+    
+    UPDATE BBS SET readnum = readnum + 1
+    WHERE idx = v_idx;
+END;

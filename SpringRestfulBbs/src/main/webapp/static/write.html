@@ -31,21 +31,25 @@
 					$('#txtWriter').focus();
 					return false;
 				}
-				//if(!$('#txtContents').val()){
-				//	alert("글 내용이 빠졌습니다.");
-				//	return false;
-				//}
+				if(!CKEDITOR.instances.contents.getData()){
+					alert("글 내용이 빠졌습니다.");
+					CKEDITOR.instances.contents.focus();
+					return false;
+				}
+				
+				let email = $('#txtEmail').val();
+				if(email != "") email += '@' + $('#company').val();
 				
 				$.ajax({
-					url : '/write',
+					url : '/bbs',
 					type : 'POST',
 					contentType : 'application/json;charset=utf-8',   //서버로 보내는 데이터의 데이터타입
 					dataType : 'json',     //서버에서 보내오는 데이터의 데이터타입
 					data : JSON.stringify({
 						'writer' : $('#txtWriter').val(),
-						'email' : $('#txtEmail').val() + '@' + $('#company').val(),
+						'email' : email,
 						'title' : $('#txtTitle').val(),
-						'contents' : $('#txtContents').val()
+						'contents' : CKEDITOR.instances.contents.getData() 
 					}),                    //서버로 보내는 데이터
 					success : function(data){    //서버에서 받아온 데이터
 						alert(data.code);   //success
@@ -96,7 +100,7 @@
 				<div class="form-group">
 					<label for="txtContent" class="col-sm-2 control-label">글 내용</label>
 					<div class="col-sm-8">
-						<textarea class="form-control" rows="10" name="contents" id="txtContents"></textarea>
+						<textarea class="form-control" rows="10" name="contents"></textarea>
 					</div>
 				</div>
 				<div class="form-group">

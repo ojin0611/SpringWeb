@@ -45,8 +45,7 @@ public class BbsServiceImpl implements BbsService {
 
 	@Override
 	public void read(Map map) {
-		// TODO Auto-generated method stub
-
+		this.bbsDao.select(map);
 	}
 
 	@Override
@@ -56,14 +55,19 @@ public class BbsServiceImpl implements BbsService {
 
 	@Override
 	public void update(BbsVO bbsVo) {
-		// TODO Auto-generated method stub
-
+		String title = bbsVo.getTitle();
+		title = this.changeStr(title);
+		bbsVo.setTitle(title);
+		
+		String contents = bbsVo.getContents();
+		contents = this.changeStr(contents);
+		bbsVo.setContents(contents);
+		this.bbsDao.update(bbsVo);
 	}
 
 	@Override
 	public void delete(int idx) {
-		// TODO Auto-generated method stub
-
+		this.bbsDao.delete(idx);
 	}
 
 }

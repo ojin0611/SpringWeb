@@ -35,7 +35,7 @@ class TestApp {
 		log.warn("오늘은 " + today);
 	}
 	
-	@Test
+	@Disabled @Test
 	void test1() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		this.sqlSession.selectList("Bbs.selectAll", map);
@@ -57,6 +57,31 @@ class TestApp {
 		bbsVO.setTitle("제목 3");
 		bbsVO.setContents("내용 3");
 		this.sqlSession.insert("Bbs.insert", bbsVO);
+	}
+	
+	@Disabled @Test
+	void test3() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("idx", 21);
+		this.sqlSession.selectOne("Bbs.selectOne", map);
+		List<BbsVO> list = (List<BbsVO>)map.get("result");
+		BbsVO bbsVO = list.get(0);
+		log.warn(bbsVO.toString());
+	}
+	
+	@Disabled @Test
+	void test4() {
+		this.sqlSession.delete("Bbs.delete", 1);
+	}
+	
+	@Test
+	void test5() {
+		BbsVO bbsVO = new BbsVO();
+		bbsVO.setIdx(81);
+		bbsVO.setTitle("첫 글 제목 수정");
+		bbsVO.setEmail("jimin@aaa.com");
+		bbsVO.setContents("<p>첫 글 내용 수정</p>");
+		this.sqlSession.update("Bbs.update", bbsVO);
 	}
 
 }

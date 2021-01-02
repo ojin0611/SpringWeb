@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reply">
+
+	<resultMap type="replyVo" id="ReplyResultMap">
+		<id property="replyidx" javaType="Integer" column="replyidx"
+			jdbcType="INTEGER" />
+		<result property="replyer" javaType="java.lang.String"
+			column="replyer" jdbcType="VARCHAR" />
+		<result property="replytext" javaType="java.lang.String"
+			column="replytext" jdbcType="VARCHAR" />
+		<result property="replydate" javaType="java.util.Date"
+			column="replydate" jdbcType="DATE" />
+		<result property="idx" javaType="Integer" column="idx"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<parameterMap type="replyVo" id="replySelectParameterMap">
+		<parameter property="idx" javaType="java.lang.Integer"
+			jdbcType="INTEGER" mode="IN" />
+		<parameter property="results" javaType="ResultSet"
+			jdbcType="CURSOR" mode="OUT" resultMap="ReplyResultMap" />
+	</parameterMap>
+	<select id="replySelectAll"
+		parameterMap="replySelectParameterMap" statementType="CALLABLE">
+		{ call sp_reply_select(?, ?) }
+	</select>
+
+	<parameterMap type="replyVo" id="replyInsertParameterMap">
+		<parameter property="idx" javaType="java.lang.Integer"
+			jdbcType="INTEGER" mode="IN" />
+		<parameter property="replyer" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="replytext" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="replyInsert" parameterMap="replyInsertParameterMap"
+		statementType="CALLABLE">
+		{ call sp_reply_insert(?, ?, ?) }
+	</insert>
+</mapper>
